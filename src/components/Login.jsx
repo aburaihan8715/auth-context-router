@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/AuthProvider";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-  const { loginUsingEmailAndPassword, setUser, setLoading, signInUsingGoogle, signInUsingGithub, signInUsingFacebook } = useContext(UserContext);
+  const { loginUsingEmailAndPassword, setUser, setLoading, signInUsingGoogle, signInUsingGithub, signInUsingFacebook, error, setError } =
+    useContext(UserContext);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -24,6 +27,7 @@ const Login = () => {
         setUser(user);
         setLoading(false);
         alert("Login success!!");
+        setError("");
         navigate(from);
       })
       .catch((error) => {
@@ -39,6 +43,11 @@ const Login = () => {
         const user = result.user;
         setUser(user);
         setLoading(false);
+        toast.success("Login success!!", {
+          position: "top-center",
+        });
+        setError("");
+        navigate("/");
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -53,6 +62,11 @@ const Login = () => {
         const user = result.user;
         setUser(user);
         setLoading(false);
+        toast.success("Login success!!", {
+          position: "top-center",
+        });
+        setError("");
+        navigate("/");
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -67,6 +81,11 @@ const Login = () => {
         const user = result.user;
         setUser(user);
         setLoading(false);
+        toast.success("Login success!!", {
+          position: "top-center",
+        });
+        setError("");
+        navigate("/");
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -96,25 +115,47 @@ const Login = () => {
           </div>
 
           <div className="text-right">
-            <input className="btn btn-primary w-full" type="submit" value="Login" />
+            <button className="btn btn-primary w-full" type="submit">
+              Login
+            </button>
           </div>
+          {/* error message */}
+          {error && (
+            <div className="alert alert-error shadow-lg">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span>{error}</span>
+              </div>
+            </div>
+          )}
         </div>
       </form>
+
       <p className="text-center text-2xl mt-4">---------------or---------------</p>
       <div className="text-center mt-8">
         <button onClick={loginUsingGoogleHandler} className="btn btn-primary">
           Login with google
         </button>
+        <ToastContainer />
       </div>
       <div className="text-center mt-8">
         <button onClick={loginUsingGithubHandler} className="btn btn-primary">
           Login with github
         </button>
+        <ToastContainer />
       </div>
       <div className="text-center mt-8 mb-2">
         <button onClick={loginUsingFacebookHandler} className="btn btn-primary">
           Login with facebook
         </button>
+        <ToastContainer />
       </div>
     </div>
   );

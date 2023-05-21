@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/AuthProvider";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
-  const { createUserUsingEmailAndPassword, setUser, setLoading, signInUsingGoogle, signInUsingGithub, signInUsingFacebook } = useContext(UserContext);
+  const { createUserUsingEmailAndPassword, setUser, setLoading, signInUsingGoogle, signInUsingGithub, signInUsingFacebook, setError, error } =
+    useContext(UserContext);
   const navigate = useNavigate();
 
   // register handler
@@ -14,7 +17,7 @@ const Register = () => {
     const email = form.email.value;
     const password = form.password.value;
     if (password.length < 6) {
-      alert("Password should be minimum 6 character!");
+      setError("Password should be minimum 6 character!");
       return;
     }
     // console.log(name, email, password);
@@ -27,11 +30,13 @@ const Register = () => {
         setUser(user);
         setLoading(false);
         alert("User has been created successfully!!");
+        setError("")
         navigate("/");
       })
       .catch((error) => {
         const errorMessage = error.message;
-        console.log(errorMessage);
+        setError(errorMessage);
+        // console.log(errorMessage);
       });
   };
 
@@ -42,10 +47,17 @@ const Register = () => {
         const user = result.user;
         setUser(user);
         setLoading(false);
+        toast.success("User has been created successfully!!", {
+          position: "top-center",
+        });
+        setError("")
+        navigate("/");
       })
       .catch((error) => {
         const errorMessage = error.message;
-        console.log(errorMessage);
+        setError(errorMessage);
+
+        // console.log(errorMessage);
       });
   };
 
@@ -56,10 +68,17 @@ const Register = () => {
         const user = result.user;
         setUser(user);
         setLoading(false);
+        toast.success("User has been created successfully!!", {
+          position: "top-center",
+        });
+        setError("")
+        navigate("/");
       })
       .catch((error) => {
         const errorMessage = error.message;
-        console.log(errorMessage);
+        setError(errorMessage);
+
+        // console.log(errorMessage);
       });
   };
 
@@ -70,10 +89,17 @@ const Register = () => {
         const user = result.user;
         setUser(user);
         setLoading(false);
+        toast.success("User has been created successfully!!", {
+          position: "top-center",
+        });
+        setError("")
+        navigate("/");
       })
       .catch((error) => {
         const errorMessage = error.message;
-        console.log(errorMessage);
+        setError(errorMessage);
+
+        // console.log(errorMessage);
       });
   };
   return (
@@ -101,8 +127,26 @@ const Register = () => {
           </div>
 
           <div className="text-right">
-            <input className="btn btn-primary w-full" type="submit" value="Register" />
+            <button className="btn btn-primary w-full" type="submit">
+              Register
+            </button>
           </div>
+          {/* error message */}
+          {error && (
+            <div className="alert alert-error shadow-lg">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span>{error}</span>
+              </div>
+            </div>
+          )}
         </div>
       </form>
       <p className="text-center text-2xl mt-4">---------------or---------------</p>
@@ -110,16 +154,19 @@ const Register = () => {
         <button onClick={registerUsingGoogleHandler} className="btn btn-primary">
           Register with google
         </button>
+        <ToastContainer />
       </div>
       <div className="text-center mt-4">
         <button onClick={registerUsingGithubHandler} className="btn btn-primary">
           Register with github
         </button>
+        <ToastContainer />
       </div>
       <div className="text-center mt-4 mb-2">
         <button onClick={registerUsingFacebookHandler} className="btn btn-primary">
           Register with facebook
         </button>
+        <ToastContainer />
       </div>
     </div>
   );
