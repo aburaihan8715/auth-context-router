@@ -36,7 +36,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/order",
-        element: <PrivateRoute><Order></Order></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Order></Order>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/register",

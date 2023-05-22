@@ -1,8 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/AuthProvider";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { getAuth, sendEmailVerification, updateProfile } from "firebase/auth";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
@@ -12,7 +10,7 @@ const auth = getAuth(app);
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { createUserUsingEmailAndPassword, setUser, setLoading, setError, error } =
+  const { createUserUsingEmailAndPassword, setUser, setLoading, signInUsingGoogle, signInUsingGithub, signInUsingFacebook, setError, error } =
     useContext(UserContext);
   const navigate = useNavigate();
 
@@ -58,6 +56,7 @@ const Register = () => {
       .catch((error) => {
         const errorMessage = error.message;
         setError(errorMessage);
+        // console.log(errorMessage);
       });
   };
 
@@ -81,6 +80,8 @@ const Register = () => {
       alert("Please check your email!");
     });
   };
+
+  
   return (
     <div className="container mx-auto">
       <h1 className="text-4xl text-gray-700 text-center mb-4 uppercase">register</h1>
@@ -104,7 +105,7 @@ const Register = () => {
           <div className="relative">
             <input
               className="border rounded p-2 w-full"
-              type={showPassword ? "password" : "text"}
+              type={showPassword ? "text" : "password"}
               name="password"
               id="password"
               placeholder="Enter password"
@@ -142,6 +143,8 @@ const Register = () => {
       <p className="text-center text-2xl mt-4">---------------or---------------</p>
       {/* social login */}
       <SocialLogin></SocialLogin>
+
+      
     </div>
   );
 };

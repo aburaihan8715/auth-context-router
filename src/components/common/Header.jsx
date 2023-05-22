@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { UserContext } from "../../contexts/AuthProvider";
 
 const Header = () => {
-  const { logOut, user, setUser } = useContext(UserContext);
+  const { logOut, user, setUser,setLoading } = useContext(UserContext);
   // console.log(user);
 
   // nav items

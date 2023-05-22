@@ -1,8 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/AuthProvider";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import SocialLogin from "./common/SocialLogin";
 
@@ -35,6 +33,7 @@ const Login = () => {
       })
       .catch((error) => {
         const errorMessage = error.message;
+        setError(errorMessage)
         console.log(errorMessage);
       });
   };
@@ -58,7 +57,7 @@ const Login = () => {
           <div className="relative">
             <input
               className="border rounded p-2 w-full"
-              type={showPassword ? "password" : "text"}
+              type={showPassword ? "text" : "password"}
               name="password"
               id="password"
               placeholder="Enter password"
