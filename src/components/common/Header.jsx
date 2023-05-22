@@ -24,7 +24,7 @@ const Header = () => {
         <NavLink to="/order">Order</NavLink>
       </li>
       <li>
-        <span className="text-orange-600">{user?.email}</span>
+        <span className="text-orange-600">{user?.displayName}</span>
       </li>
     </>
   );

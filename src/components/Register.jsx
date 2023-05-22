@@ -1,10 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/AuthProvider";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getAuth, sendEmailVerification, updateProfile } from "firebase/auth";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
+
+import app from "../firebase/firebase.config";
+const auth = getAuth(app);
 
 const Register = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const { createUserUsingEmailAndPassword, setUser, setLoading, signInUsingGoogle, signInUsingGithub, signInUsingFacebook, setError, error } =
     useContext(UserContext);
   const navigate = useNavigate();
@@ -16,21 +22,36 @@ const Register = () => {
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    if (password.length < 6) {
-      setError("Password should be minimum 6 character!");
+    setError("");
+
+    if (!/(?=.*?[A-Z])/.test(password)) {
+      setError("At least one upper case");
+      return;
+    } else if (!/(?=.*?[a-z])/.test(password)) {
+      setError("At least one lower case English letter");
+      return;
+    } else if (!/(?=.*?[#?!@$%^&*-])/.test(password)) {
+      setError("At least one special character");
+      return;
+    } else if (!/.{6,}/.test(password)) {
+      setError("Password should be at least 6 character");
       return;
     }
-    // console.log(name, email, password);
     form.reset();
 
     // create user using email and password
     createUserUsingEmailAndPassword(email, password)
       .then((result) => {
         const user = result.user;
+        // update user profile
+        updateUserProfile(name, user);
+        // verify email
+        verifyEmail(user);
+
         setUser(user);
         setLoading(false);
         alert("User has been created successfully!!");
-        setError("")
+        setError("");
         navigate("/");
       })
       .catch((error) => {
@@ -38,6 +59,27 @@ const Register = () => {
         setError(errorMessage);
         // console.log(errorMessage);
       });
+  };
+
+  // update user profile
+  const updateUserProfile = (name, user) => {
+    updateProfile(user, {
+      displayName: name,
+    })
+      .then(() => {
+        console.log("profile updated!");
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        setError(errorMessage);
+      });
+  };
+
+  // email verification message
+  const verifyEmail = (user) => {
+    sendEmailVerification(user).then(() => {
+      alert("Please check your email!");
+    });
   };
 
   // register using google
@@ -50,7 +92,7 @@ const Register = () => {
         toast.success("User has been created successfully!!", {
           position: "top-center",
         });
-        setError("")
+        setError("");
         navigate("/");
       })
       .catch((error) => {
@@ -71,7 +113,7 @@ const Register = () => {
         toast.success("User has been created successfully!!", {
           position: "top-center",
         });
-        setError("")
+        setError("");
         navigate("/");
       })
       .catch((error) => {
@@ -92,7 +134,7 @@ const Register = () => {
         toast.success("User has been created successfully!!", {
           position: "top-center",
         });
-        setError("")
+        setError("");
         navigate("/");
       })
       .catch((error) => {
@@ -122,8 +164,19 @@ const Register = () => {
           <div className="">
             <input className="border rounded p-2 w-full" type="email" name="email" id="email" placeholder="Enter email" required />
           </div>
-          <div className="">
-            <input className="border rounded p-2 w-full" type="password" name="password" id="password" placeholder="Enter password" required />
+          <div className="relative">
+            <input
+              className="border rounded p-2 w-full"
+              type={showPassword ? "password" : "text"}
+              name="password"
+              id="password"
+              placeholder="Enter password"
+              required
+            />
+            <span className="absolute right-8 top-1/2 -translate-y-1/2" onClick={() => setShowPassword(!showPassword)}>
+              {showPassword && <EyeSlashIcon className="h-6 w-6 text-gray-500" />}
+              {!showPassword && <EyeIcon className="h-6 w-6 text-gray-500" />}
+            </span>
           </div>
 
           <div className="text-right">

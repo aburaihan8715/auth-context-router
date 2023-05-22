@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/AuthProvider";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const { loginUsingEmailAndPassword, setUser, setLoading, signInUsingGoogle, signInUsingGithub, signInUsingFacebook, error, setError } =
     useContext(UserContext);
 
@@ -110,8 +112,19 @@ const Login = () => {
           <div className="">
             <input className="border rounded p-2 w-full" type="email" name="email" id="email" placeholder="Enter email" required />
           </div>
-          <div className="">
-            <input className="border rounded p-2 w-full" type="password" name="password" id="password" placeholder="Enter password" required />
+          <div className="relative">
+            <input
+              className="border rounded p-2 w-full"
+              type={showPassword ? "password" : "text"}
+              name="password"
+              id="password"
+              placeholder="Enter password"
+              required
+            />
+            <span className="absolute right-8 top-1/2 -translate-y-1/2" onClick={() => setShowPassword(!showPassword)}>
+              {showPassword && <EyeSlashIcon className="h-6 w-6 text-gray-500" />}
+              {!showPassword && <EyeIcon className="h-6 w-6 text-gray-500" />}
+            </span>
           </div>
 
           <div className="text-right">
@@ -119,6 +132,12 @@ const Login = () => {
               Login
             </button>
           </div>
+          <div className="text-end">
+            <small className="text-blue-700">
+              <Link to="/forgetPassword">Forget Password?</Link>
+            </small>
+          </div>
+
           {/* error message */}
           {error && (
             <div className="alert alert-error shadow-lg">
