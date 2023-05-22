@@ -140,7 +140,7 @@ const Register = () => {
           )}
         </div>
       </form>
-      <p className="text-center text-2xl mt-4">---------------or---------------</p>
+      <p className="text-center text-2xl mt-2">--------------or---------------</p>
       {/* social login */}
       <SocialLogin></SocialLogin>
 

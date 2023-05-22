@@ -71,23 +71,43 @@ const SocialLogin = () => {
 
   return (
     <div className="container mx-auto">
-      <div className="text-center mt-8">
-        <button onClick={loginUsingGoogleHandler} className="btn btn-primary">
-          google
-        </button>
-        <ToastContainer />
+      {/* google login */}
+      <div className="text-center mt-4 flex justify-center">
+        <div className="w-48">
+          <button onClick={loginUsingGoogleHandler} className="btn btn-primary w-full flex justify-between px-10">
+            <span>
+              <img src="https://i.ibb.co/72bXZqD/google.png" width="24px" height="24px" alt="google" />{" "}
+            </span>
+            <span>google</span>
+          </button>
+          <ToastContainer />
+        </div>
       </div>
-      <div className="text-center mt-4">
-        <button onClick={loginUsingGithubHandler} className="btn btn-primary">
-          github
-        </button>
-        <ToastContainer />
+
+      {/* github login */}
+      <div className="text-center mt-4  flex justify-center">
+        <div className="w-48">
+          <button onClick={loginUsingGithubHandler} className="btn btn-primary w-full flex justify-between px-10">
+            <span>
+              <img src="https://i.ibb.co/JHJ7PMt/github.png" width="24px" height="24px" alt="google" />{" "}
+            </span>
+            <span>google</span>
+          </button>
+          <ToastContainer />
+        </div>
       </div>
-      <div className="text-center mt-4 mb-2">
-        <button onClick={loginUsingFacebookHandler} className="btn btn-primary">
-          facebook
-        </button>
-        <ToastContainer />
+
+      {/* facebook login */}
+      <div className="text-center mt-4 mb-2  flex justify-center">
+        <div className="w-48">
+          <button onClick={loginUsingFacebookHandler} className="btn btn-primary w-full flex justify-between px-10">
+            <span>
+              <img src="https://i.ibb.co/Y7nTmxp/facebook.png" width="24px" height="24px" alt="google" />{" "}
+            </span>
+            <span>google</span>
+          </button>
+          <ToastContainer />
+        </div>
       </div>
     </div>
   );

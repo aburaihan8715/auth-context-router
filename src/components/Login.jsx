@@ -74,6 +74,7 @@ const Login = () => {
               Login
             </button>
           </div>
+
           <div className="text-end">
             <small className="text-blue-700">
               <Link to="/forgetPassword">Forget Password?</Link>
@@ -98,8 +99,7 @@ const Login = () => {
           )}
         </div>
       </form>
-
-      <p className="text-center text-2xl mt-4">---------------or---------------</p>
+      <p className="text-center text-2xl">---------------or---------------</p>
 
       {/* social login */}
       <SocialLogin></SocialLogin>
