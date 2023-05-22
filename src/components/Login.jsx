@@ -158,23 +158,25 @@ const Login = () => {
       </form>
 
       <p className="text-center text-2xl mt-4">---------------or---------------</p>
-      <div className="text-center mt-8">
-        <button onClick={loginUsingGoogleHandler} className="btn btn-primary">
-          Login with google
-        </button>
-        <ToastContainer />
-      </div>
-      <div className="text-center mt-8">
-        <button onClick={loginUsingGithubHandler} className="btn btn-primary">
-          Login with github
-        </button>
-        <ToastContainer />
-      </div>
-      <div className="text-center mt-8 mb-2">
-        <button onClick={loginUsingFacebookHandler} className="btn btn-primary">
-          Login with facebook
-        </button>
-        <ToastContainer />
+      <div>
+        <div className="text-center mt-8">
+          <button onClick={loginUsingGoogleHandler} className="btn btn-primary">
+            Login with google
+          </button>
+          <ToastContainer />
+        </div>
+        <div className="text-center mt-8">
+          <button onClick={loginUsingGithubHandler} className="btn btn-primary">
+            Login with github
+          </button>
+          <ToastContainer />
+        </div>
+        <div className="text-center mt-8 mb-2">
+          <button onClick={loginUsingFacebookHandler} className="btn btn-primary">
+            Login with facebook
+          </button>
+          <ToastContainer />
+        </div>
       </div>
     </div>
   );

@@ -144,6 +144,7 @@ const Register = () => {
         // console.log(errorMessage);
       });
   };
+
   return (
     <div className="container mx-auto">
       <h1 className="text-4xl text-gray-700 text-center mb-4 uppercase">register</h1>
@@ -203,23 +204,26 @@ const Register = () => {
         </div>
       </form>
       <p className="text-center text-2xl mt-4">---------------or---------------</p>
-      <div className="text-center mt-8">
-        <button onClick={registerUsingGoogleHandler} className="btn btn-primary">
-          Register with google
-        </button>
-        <ToastContainer />
-      </div>
-      <div className="text-center mt-4">
-        <button onClick={registerUsingGithubHandler} className="btn btn-primary">
-          Register with github
-        </button>
-        <ToastContainer />
-      </div>
-      <div className="text-center mt-4 mb-2">
-        <button onClick={registerUsingFacebookHandler} className="btn btn-primary">
-          Register with facebook
-        </button>
-        <ToastContainer />
+      
+      <div>
+        <div className="text-center mt-8">
+          <button onClick={registerUsingGoogleHandler} className="btn btn-primary">
+            Register with google
+          </button>
+          <ToastContainer />
+        </div>
+        <div className="text-center mt-4">
+          <button onClick={registerUsingGithubHandler} className="btn btn-primary">
+            Register with github
+          </button>
+          <ToastContainer />
+        </div>
+        <div className="text-center mt-4 mb-2">
+          <button onClick={registerUsingFacebookHandler} className="btn btn-primary">
+            Register with facebook
+          </button>
+          <ToastContainer />
+        </div>
       </div>
     </div>
   );

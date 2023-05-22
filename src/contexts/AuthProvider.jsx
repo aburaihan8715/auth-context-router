@@ -30,19 +30,19 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  // sign in using google
+  // login using google
   const signInUsingGoogle = () => {
     const googleProvider = new GoogleAuthProvider();
     return signInWithPopup(auth, googleProvider);
   };
 
-  // sign in using github
+  // login using github
   const signInUsingGithub = () => {
     const githubProvider = new GithubAuthProvider();
     return signInWithPopup(auth, githubProvider);
   };
 
-  // sign in using facebook
+  // login using facebook
   const signInUsingFacebook = () => {
     const facebookProvider = new FacebookAuthProvider();
     return signInWithPopup(auth, facebookProvider);
