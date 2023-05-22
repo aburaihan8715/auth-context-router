@@ -7,11 +7,12 @@ import { getAuth, sendEmailVerification, updateProfile } from "firebase/auth";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
 import app from "../firebase/firebase.config";
+import SocialLogin from "./common/SocialLogin";
 const auth = getAuth(app);
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { createUserUsingEmailAndPassword, setUser, setLoading, signInUsingGoogle, signInUsingGithub, signInUsingFacebook, setError, error } =
+  const { createUserUsingEmailAndPassword, setUser, setLoading, setError, error } =
     useContext(UserContext);
   const navigate = useNavigate();
 
@@ -57,7 +58,6 @@ const Register = () => {
       .catch((error) => {
         const errorMessage = error.message;
         setError(errorMessage);
-        // console.log(errorMessage);
       });
   };
 
@@ -81,70 +81,6 @@ const Register = () => {
       alert("Please check your email!");
     });
   };
-
-  // register using google
-  const registerUsingGoogleHandler = () => {
-    signInUsingGoogle()
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        setLoading(false);
-        toast.success("User has been created successfully!!", {
-          position: "top-center",
-        });
-        setError("");
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        setError(errorMessage);
-
-        // console.log(errorMessage);
-      });
-  };
-
-  // register using github
-  const registerUsingGithubHandler = () => {
-    signInUsingGithub()
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        setLoading(false);
-        toast.success("User has been created successfully!!", {
-          position: "top-center",
-        });
-        setError("");
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        setError(errorMessage);
-
-        // console.log(errorMessage);
-      });
-  };
-
-  // register using facebook
-  const registerUsingFacebookHandler = () => {
-    signInUsingFacebook()
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        setLoading(false);
-        toast.success("User has been created successfully!!", {
-          position: "top-center",
-        });
-        setError("");
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        setError(errorMessage);
-
-        // console.log(errorMessage);
-      });
-  };
-
   return (
     <div className="container mx-auto">
       <h1 className="text-4xl text-gray-700 text-center mb-4 uppercase">register</h1>
@@ -175,8 +111,8 @@ const Register = () => {
               required
             />
             <span className="absolute right-8 top-1/2 -translate-y-1/2" onClick={() => setShowPassword(!showPassword)}>
-              {showPassword && <EyeSlashIcon className="h-6 w-6 text-gray-500" />}
-              {!showPassword && <EyeIcon className="h-6 w-6 text-gray-500" />}
+              {!showPassword && <EyeSlashIcon className="h-6 w-6 text-gray-500" />}
+              {showPassword && <EyeIcon className="h-6 w-6 text-gray-500" />}
             </span>
           </div>
 
@@ -204,27 +140,8 @@ const Register = () => {
         </div>
       </form>
       <p className="text-center text-2xl mt-4">---------------or---------------</p>
-      
-      <div>
-        <div className="text-center mt-8">
-          <button onClick={registerUsingGoogleHandler} className="btn btn-primary">
-            Register with google
-          </button>
-          <ToastContainer />
-        </div>
-        <div className="text-center mt-4">
-          <button onClick={registerUsingGithubHandler} className="btn btn-primary">
-            Register with github
-          </button>
-          <ToastContainer />
-        </div>
-        <div className="text-center mt-4 mb-2">
-          <button onClick={registerUsingFacebookHandler} className="btn btn-primary">
-            Register with facebook
-          </button>
-          <ToastContainer />
-        </div>
-      </div>
+      {/* social login */}
+      <SocialLogin></SocialLogin>
     </div>
   );
 };

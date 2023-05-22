@@ -4,10 +4,11 @@ import { UserContext } from "../contexts/AuthProvider";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
+import SocialLogin from "./common/SocialLogin";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { loginUsingEmailAndPassword, setUser, setLoading, signInUsingGoogle, signInUsingGithub, signInUsingFacebook, error, setError } =
+  const { loginUsingEmailAndPassword, setUser, setLoading, error, setError } =
     useContext(UserContext);
 
   const location = useLocation();
@@ -37,64 +38,6 @@ const Login = () => {
         console.log(errorMessage);
       });
   };
-
-  // login using google
-  const loginUsingGoogleHandler = () => {
-    signInUsingGoogle()
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        setLoading(false);
-        toast.success("Login success!!", {
-          position: "top-center",
-        });
-        setError("");
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        console.log(errorMessage);
-      });
-  };
-
-  // login using github
-  const loginUsingGithubHandler = () => {
-    signInUsingGithub()
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        setLoading(false);
-        toast.success("Login success!!", {
-          position: "top-center",
-        });
-        setError("");
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        console.log(errorMessage);
-      });
-  };
-
-  // login using facebook
-  const loginUsingFacebookHandler = () => {
-    signInUsingFacebook()
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        setLoading(false);
-        toast.success("Login success!!", {
-          position: "top-center",
-        });
-        setError("");
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        console.log(errorMessage);
-      });
-  };
-
   return (
     <div className="container mx-auto">
       <h1 className="text-4xl text-gray-700 uppercase text-center mb-4">Login</h1>
@@ -122,8 +65,8 @@ const Login = () => {
               required
             />
             <span className="absolute right-8 top-1/2 -translate-y-1/2" onClick={() => setShowPassword(!showPassword)}>
-              {showPassword && <EyeSlashIcon className="h-6 w-6 text-gray-500" />}
-              {!showPassword && <EyeIcon className="h-6 w-6 text-gray-500" />}
+              {!showPassword && <EyeSlashIcon className="h-6 w-6 text-gray-500" />}
+              {showPassword && <EyeIcon className="h-6 w-6 text-gray-500" />}
             </span>
           </div>
 
@@ -158,26 +101,9 @@ const Login = () => {
       </form>
 
       <p className="text-center text-2xl mt-4">---------------or---------------</p>
-      <div>
-        <div className="text-center mt-8">
-          <button onClick={loginUsingGoogleHandler} className="btn btn-primary">
-            Login with google
-          </button>
-          <ToastContainer />
-        </div>
-        <div className="text-center mt-8">
-          <button onClick={loginUsingGithubHandler} className="btn btn-primary">
-            Login with github
-          </button>
-          <ToastContainer />
-        </div>
-        <div className="text-center mt-8 mb-2">
-          <button onClick={loginUsingFacebookHandler} className="btn btn-primary">
-            Login with facebook
-          </button>
-          <ToastContainer />
-        </div>
-      </div>
+
+      {/* social login */}
+      <SocialLogin></SocialLogin>
     </div>
   );
 };
