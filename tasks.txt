@@ -1,11 +1,16 @@
-===========Tasks have to implement================
+
+===========Tasks have been implemented================
 ## Router
+- simple routing
+- nested routing
+- NotFound / errorPage
 - private routing and redirect to the expected page
 - when click browser back go only one step back not back to login page
-- 
+
 
 ## Firebase
-
+- Register or create user using email and password
+- Implementing login using email and password
 - Set user name
 - Send email verification message
 - Send password reset message
@@ -13,23 +18,11 @@
 - show error message
 - show and hide password
 - Register or login using facebook, github, google
-- 
-- 
-
-
-
-
-===========Tasks have been implemented================
-## Router
-- simple routing
-- nested routing
-- NotFound / errorPage
-
-
-## Firebase
-- Register or create user using email and password
-- Implementing login using email and password
 
 
 ## Context
 - create auth context and share it all over the website
+
+## others
+- create custom hook for dynamic title
+- create icon and set as favicon
