@@ -6,13 +6,16 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
 import app from "../firebase/firebase.config";
 import SocialLogin from "./common/SocialLogin";
+import useTitle from "../hooks/useTitle";
 const auth = getAuth(app);
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { createUserUsingEmailAndPassword, setUser, setLoading, signInUsingGoogle, signInUsingGithub, signInUsingFacebook, setError, error } =
+  const { createUserUsingEmailAndPassword, setUser, setLoading,  setError, error } =
     useContext(UserContext);
   const navigate = useNavigate();
+  useTitle("Register")
+
 
   // register handler
   const registerHandler = (event) => {
@@ -143,8 +146,6 @@ const Register = () => {
       <p className="text-center text-2xl mt-2">--------------or---------------</p>
       {/* social login */}
       <SocialLogin></SocialLogin>
-
-      
     </div>
   );
 };

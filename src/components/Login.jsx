@@ -3,11 +3,14 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/AuthProvider";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import SocialLogin from "./common/SocialLogin";
+import useTitle from "../hooks/useTitle";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { loginUsingEmailAndPassword, setUser, setLoading, error, setError } =
     useContext(UserContext);
+  useTitle("Login")
+
 
   const location = useLocation();
   const navigate = useNavigate();

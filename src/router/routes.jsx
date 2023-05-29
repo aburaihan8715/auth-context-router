@@ -6,7 +6,6 @@ import Contact from "../components/Contact";
 import Login from "../components/Login";
 import Order from "../components/Order";
 import Register from "../components/Register";
-import Users from "../components/Users";
 import NotFound from "../components/NotFound";
 import PrivateRoute from "./PrivateRoute";
 import ForgetPassword from "../components/ForgetPassword";
@@ -46,10 +45,7 @@ const router = createBrowserRouter([
         path: "/register",
         element: <Register></Register>,
       },
-      {
-        path: "/users",
-        element: <Users></Users>,
-      },
+      
       {
         path: "/forgetPassword",
         element: <ForgetPassword></ForgetPassword>,
