@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAuth } from "firebase/auth";
 
-import { UserContext } from "../../contexts/AuthProvider";
-import app from "../../firebase/firebase.config";
-const auth = getAuth(app);
+import { UserContext } from "../contexts/AuthProvider";
+import app from "../firebase/firebase.config";
+getAuth(app);
 
 const SocialLogin = () => {
   const { setUser, setLoading, signInUsingGoogle, signInUsingGithub, signInUsingFacebook, setError } = useContext(UserContext);
@@ -70,7 +70,7 @@ const SocialLogin = () => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="">
       {/* google login */}
       <div className="text-center mt-4 flex justify-center">
         <div className="w-48">

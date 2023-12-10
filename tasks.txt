@@ -18,6 +18,9 @@
 - show error message
 - show and hide password
 - Register or login using facebook, github, google
+- forget password
+- update password
+- update profile (using modal)
 
 
 ## Context
@@ -26,3 +29,5 @@
 ## others
 - create custom hook for dynamic title
 - create icon and set as favicon
+- dark mode
+- admin only route

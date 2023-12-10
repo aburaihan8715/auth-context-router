@@ -1,17 +1,18 @@
-import React from "react";
-import Header from "../components/common/Header";
+import Header from "../ui/Header";
 import { Outlet } from "react-router-dom";
-import Footer from "../components/common/Footer";
+import Footer from "../ui/Footer";
 
 const MainLayout = () => {
   return (
-    <>
-      <Header></Header>
-      <div className="min-h-[calc(100vh-132px)]">
-        <Outlet></Outlet>
+    <div className="dark text-foreground bg-background min-h-screen">
+      <div className="max-w-6xl mx-auto min-h-screen flex flex-col justify-between ">
+        <Header></Header>
+        <div className="">
+          <Outlet></Outlet>
+        </div>
+        <Footer></Footer>
       </div>
-      <Footer></Footer>
-    </>
+    </div>
   );
 };
 

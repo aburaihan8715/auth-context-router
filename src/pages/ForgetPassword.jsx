@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import { useContext } from "react";
 import { UserContext } from "../contexts/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
@@ -9,8 +9,8 @@ const auth = getAuth(app);
 const ForgetPassword = () => {
   const { error, setError } = useContext(UserContext);
   const navigate = useNavigate();
-  useTitle("ForgetPassword")
-  
+  useTitle("ForgetPassword");
+
   // const emailRef = useRef();
 
   const passwordResetSubmitHandler = (event) => {
@@ -34,8 +34,8 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div className="container mx-auto">
-      <div className="min-h-[calc(100vh-132px)] flex justify-center items-center">
+    <div className="">
+      <div className="">
         <div className="">
           <h1 className="text-4xl text-gray-700 uppercase text-center mb-4">Forget Password</h1>
           <form onSubmit={passwordResetSubmitHandler}>

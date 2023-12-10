@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+/* eslint-disable react/prop-types */
+import { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { UserContext } from "../contexts/AuthProvider";
-import LoadingSpinner from "../components/common/LoadingSpinner";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 const PrivateRoute = ({ children }) => {
   const location = useLocation();
@@ -13,9 +14,8 @@ const PrivateRoute = ({ children }) => {
   }
   if (user) {
     return children;
-    
   }
-  return <Navigate to="/login" state={{from:location}}></Navigate>;
+  return <Navigate to="/login" state={{ from: location }}></Navigate>;
 };
 
 export default PrivateRoute;

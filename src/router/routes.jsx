@@ -1,58 +1,59 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import Home from "../components/Home";
-import About from "../components/About";
-import Contact from "../components/Contact";
-import Login from "../components/Login";
-import Order from "../components/Order";
-import Register from "../components/Register";
-import NotFound from "../components/NotFound";
-import PrivateRoute from "./PrivateRoute";
-import ForgetPassword from "../components/ForgetPassword";
-import SocialLogin from "../components/common/SocialLogin";
+import Home from "../pages/Home";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
+import NotFound from "../pages/NotFound";
+import ForgetPassword from "../pages/ForgetPassword";
+import Public from "../pages/Public";
+import Authenticated from "../pages/Authenticated";
+import Admin from "../pages/Admin";
+import Teacher from "../pages/Teacher";
+import SimpleUser from "../pages/SimpleUser";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <MainLayout></MainLayout>,
-    errorElement: <NotFound></NotFound>,
+    element: <MainLayout />,
+    errorElement: <NotFound />,
     children: [
       {
         path: "/",
         element: <Home></Home>,
       },
       {
-        path: "/about",
-        element: <About></About>,
+        path: "/public",
+        element: <Public></Public>,
       },
       {
-        path: "/contact",
-        element: <Contact></Contact>,
+        path: "/authenticated",
+        element: <Authenticated></Authenticated>,
       },
+
       {
         path: "/login",
         element: <Login></Login>,
       },
-      {
-        path: "/order",
-        element: (
-          <PrivateRoute>
-            <Order></Order>
-          </PrivateRoute>
-        ),
-      },
+
       {
         path: "/register",
         element: <Register></Register>,
       },
-      
+
       {
         path: "/forgetPassword",
         element: <ForgetPassword></ForgetPassword>,
       },
       {
-        path: "/socialLogin",
-        element: <SocialLogin></SocialLogin>,
+        path: "/admin",
+        element: <Admin></Admin>,
+      },
+      {
+        path: "/teacher",
+        element: <Teacher></Teacher>,
+      },
+      {
+        path: "/simpleUser",
+        element: <SimpleUser></SimpleUser>,
       },
     ],
   },

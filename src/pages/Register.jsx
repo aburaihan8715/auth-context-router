@@ -1,59 +1,104 @@
-import React, { useContext, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/AuthProvider";
+import { getAuth, sendEmailVerification, updateProfile } from "firebase/auth";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
-import SocialLogin from "./common/SocialLogin";
+
+import app from "../firebase/firebase.config";
+import SocialLogin from "../ui/SocialLogin";
 import useTitle from "../hooks/useTitle";
+getAuth(app);
 
-const Login = () => {
+const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { loginUsingEmailAndPassword, setUser, setLoading, error, setError } =
-    useContext(UserContext);
-  useTitle("Login")
-
-
-  const location = useLocation();
+  const { createUserUsingEmailAndPassword, setUser, setLoading, setError, error } = useContext(UserContext);
   const navigate = useNavigate();
-  const from = location?.state?.from?.pathname || "/";
+  useTitle("Register");
 
-  const loginHandler = (event) => {
+  // register handler
+  const registerHandler = (event) => {
     event.preventDefault();
     const form = event.target;
+    const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
+    setError("");
+
+    if (!/(?=.*?[A-Z])/.test(password)) {
+      setError("At least one upper case");
+      return;
+    } else if (!/(?=.*?[a-z])/.test(password)) {
+      setError("At least one lower case English letter");
+      return;
+    } else if (!/(?=.*?[#?!@$%^&*-])/.test(password)) {
+      setError("At least one special character");
+      return;
+    } else if (!/.{6,}/.test(password)) {
+      setError("Password should be at least 6 character");
+      return;
+    }
     form.reset();
 
-    // login user using email and password
-    loginUsingEmailAndPassword(email, password)
+    // create user using email and password
+    createUserUsingEmailAndPassword(email, password)
       .then((result) => {
         const user = result.user;
+        // update user profile
+        updateUserProfile(name, user);
+        // verify email
+        verifyEmail(user);
+
         setUser(user);
         setLoading(false);
-        alert("Login success!!");
+        alert("User has been created successfully!!");
         setError("");
-        navigate(from);
+        navigate("/");
       })
       .catch((error) => {
         const errorMessage = error.message;
-        setError(errorMessage)
-        console.log(errorMessage);
+        setError(errorMessage);
+        // console.log(errorMessage);
       });
   };
+
+  // update user profile
+  const updateUserProfile = (name, user) => {
+    updateProfile(user, {
+      displayName: name,
+    })
+      .then(() => {
+        console.log("profile updated!");
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        setError(errorMessage);
+      });
+  };
+
+  // email verification message
+  const verifyEmail = (user) => {
+    sendEmailVerification(user).then(() => {
+      alert("Please check your email!");
+    });
+  };
+
   return (
-    <div className="container mx-auto">
-      <h1 className="text-4xl text-gray-700 uppercase text-center mb-4">Login</h1>
+    <div className="">
+      <h1 className="text-4xl text-gray-700 text-center mb-4 uppercase">register</h1>
       <div className="text-center mb-2">
         <small>
-          New user?
-          <Link className="text-blue-600" to="/register">
-            Register
+          Already user?
+          <Link className="text-blue-600" to="/login">
+            Login
           </Link>
           here.
         </small>
       </div>
-      <form onSubmit={loginHandler}>
+      <form onSubmit={registerHandler}>
         <div className="space-y-3 md:w-1/2 mx-auto">
+          <div className="">
+            <input className="border rounded p-2 w-full" type="text" name="name" id="name" placeholder="Enter name" required />
+          </div>
           <div className="">
             <input className="border rounded p-2 w-full" type="email" name="email" id="email" placeholder="Enter email" required />
           </div>
@@ -74,16 +119,9 @@ const Login = () => {
 
           <div className="text-right">
             <button className="btn btn-primary w-full" type="submit">
-              Login
+              Register
             </button>
           </div>
-
-          <div className="text-end">
-            <small className="text-blue-700">
-              <Link to="/forgetPassword">Forget Password?</Link>
-            </small>
-          </div>
-
           {/* error message */}
           {error && (
             <div className="alert alert-error shadow-lg">
@@ -102,12 +140,11 @@ const Login = () => {
           )}
         </div>
       </form>
-      <p className="text-center text-2xl">---------------or---------------</p>
-
+      <p className="text-center text-2xl mt-2">--------------or---------------</p>
       {/* social login */}
       <SocialLogin></SocialLogin>
     </div>
   );
 };
 
-export default Login;
+export default Register;

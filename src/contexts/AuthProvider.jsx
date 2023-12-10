@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   getAuth,
@@ -15,6 +15,7 @@ import app from "../firebase/firebase.config";
 const auth = getAuth(app);
 export const UserContext = createContext(null);
 
+// eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
