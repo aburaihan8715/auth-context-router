@@ -1,78 +1,103 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getAuth } from "firebase/auth";
-
-import { UserContext } from "../contexts/AuthProvider";
-import app from "../firebase/firebase.config";
-getAuth(app);
+import { useUserAuth } from "../contexts/UserAuthContext";
 
 const SocialLogin = () => {
-  const { setUser, setLoading, signInUsingGoogle, signInUsingGithub, signInUsingFacebook, setError } = useContext(UserContext);
+  const { signInUsingGoogle, signInUsingGithub, signInUsingFacebook } = useUserAuth();
   const navigate = useNavigate();
 
   // google
-  const loginUsingGoogleHandler = () => {
-    signInUsingGoogle()
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        setLoading(false);
-        toast.success("User has been created successfully!!", {
-          position: "top-center",
-        });
-        setError("");
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        setError(errorMessage);
+  const loginUsingGoogleHandler = async () => {
+    try {
+      await signInUsingGoogle();
+      toast.success("User has been created successfully!!", {
+        position: "top-center",
       });
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+
+    // signInUsingGoogle()
+    //   .then((result) => {
+    //     const user = result.user;
+    //     setUser(user);
+    //     setLoading(false);
+    //     toast.success("User has been created successfully!!", {
+    //       position: "top-center",
+    //     });
+    //     setError("");
+    //     navigate("/");
+    //   })
+    //   .catch((error) => {
+    //     const errorMessage = error.message;
+    //     setError(errorMessage);
+    //   });
   };
 
   // github
-  const loginUsingGithubHandler = () => {
-    signInUsingGithub()
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        setLoading(false);
-        toast.success("User has been created successfully!!", {
-          position: "top-center",
-        });
-        setError("");
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        setError(errorMessage);
+  const loginUsingGithubHandler = async () => {
+    try {
+      await signInUsingGithub();
+      toast.success("User has been created successfully!!", {
+        position: "top-center",
       });
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+
+    // signInUsingGithub()
+    //   .then((result) => {
+    //     const user = result.user;
+    //     setUser(user);
+    //     setLoading(false);
+    //     toast.success("User has been created successfully!!", {
+    //       position: "top-center",
+    //     });
+    //     setError("");
+    //     navigate("/");
+    //   })
+    //   .catch((error) => {
+    //     const errorMessage = error.message;
+    //     setError(errorMessage);
+    //   });
   };
 
   // facebook
-  const loginUsingFacebookHandler = () => {
-    signInUsingFacebook()
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        setLoading(false);
-        toast.success("User has been created successfully!!", {
-          position: "top-center",
-        });
-        setError("");
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        setError(errorMessage);
+  const loginUsingFacebookHandler = async () => {
+    try {
+      await signInUsingFacebook();
+      toast.success("User has been created successfully!!", {
+        position: "top-center",
       });
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+
+    // signInUsingFacebook()
+    //   .then((result) => {
+    //     const user = result.user;
+    //     setUser(user);
+    //     setLoading(false);
+    //     toast.success("User has been created successfully!!", {
+    //       position: "top-center",
+    //     });
+    //     setError("");
+    //     navigate("/");
+    //   })
+    //   .catch((error) => {
+    //     const errorMessage = error.message;
+    //     setError(errorMessage);
+    //   });
   };
 
   return (
     <div className="">
       {/* google login */}
-      <div className="text-center mt-4 flex justify-center">
+      <div className="text-center mt-4 flex justify-center border">
         <div className="w-48">
           <button onClick={loginUsingGoogleHandler} className="btn btn-primary w-full flex justify-between px-10">
             <span>

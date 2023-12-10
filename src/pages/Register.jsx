@@ -1,86 +1,90 @@
-import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../contexts/AuthProvider";
-import { getAuth, sendEmailVerification, updateProfile } from "firebase/auth";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
-import app from "../firebase/firebase.config";
 import SocialLogin from "../ui/SocialLogin";
 import useTitle from "../hooks/useTitle";
-getAuth(app);
+import { useState } from "react";
+import { useUserAuth } from "../contexts/UserAuthContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { createUserUsingEmailAndPassword, setUser, setLoading, setError, error } = useContext(UserContext);
+  const { createUserUsingEmailAndPassword } = useUserAuth();
   const navigate = useNavigate();
   useTitle("Register");
 
   // register handler
-  const registerHandler = (event) => {
+  const registerHandler = async (event) => {
     event.preventDefault();
     const form = event.target;
-    const name = form.name.value;
+    // const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    setError("");
 
-    if (!/(?=.*?[A-Z])/.test(password)) {
-      setError("At least one upper case");
-      return;
-    } else if (!/(?=.*?[a-z])/.test(password)) {
-      setError("At least one lower case English letter");
-      return;
-    } else if (!/(?=.*?[#?!@$%^&*-])/.test(password)) {
-      setError("At least one special character");
-      return;
-    } else if (!/.{6,}/.test(password)) {
-      setError("Password should be at least 6 character");
-      return;
-    }
+    // if (!/(?=.*?[A-Z])/.test(password)) {
+    //   setError("At least one upper case");
+    //   return;
+    // } else if (!/(?=.*?[a-z])/.test(password)) {
+    //   setError("At least one lower case English letter");
+    //   return;
+    // } else if (!/(?=.*?[#?!@$%^&*-])/.test(password)) {
+    //   setError("At least one special character");
+    //   return;
+    // } else if (!/.{6,}/.test(password)) {
+    //   setError("Password should be at least 6 character");
+    //   return;
+    // }
     form.reset();
 
     // create user using email and password
-    createUserUsingEmailAndPassword(email, password)
-      .then((result) => {
-        const user = result.user;
-        // update user profile
-        updateUserProfile(name, user);
-        // verify email
-        verifyEmail(user);
+    // createUserUsingEmailAndPassword(email, password)
+    //   .then((result) => {
+    //     const user = result.user;
+    //     // update user profile
+    //     updateUserProfile(name, user);
+    //     // verify email
+    //     verifyEmail(user);
 
-        setUser(user);
-        setLoading(false);
-        alert("User has been created successfully!!");
-        setError("");
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        setError(errorMessage);
-        // console.log(errorMessage);
-      });
+    //     setUser(user);
+    //     setLoading(false);
+    //     alert("User has been created successfully!!");
+    //     setError("");
+    //     navigate("/");
+    //   })
+    //   .catch((error) => {
+    //     const errorMessage = error.message;
+    //     setError(errorMessage);
+    //     // console.log(errorMessage);
+    //   });
+
+    try {
+      await createUserUsingEmailAndPassword(email, password);
+      alert("User has been created successfully!!");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // update user profile
-  const updateUserProfile = (name, user) => {
-    updateProfile(user, {
-      displayName: name,
-    })
-      .then(() => {
-        console.log("profile updated!");
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        setError(errorMessage);
-      });
-  };
+  // const updateUserProfile = (name, user) => {
+  //   updateProfile(user, {
+  //     displayName: name,
+  //   })
+  //     .then(() => {
+  //       console.log("profile updated!");
+  //     })
+  //     .catch((error) => {
+  //       const errorMessage = error.message;
+  //       setError(errorMessage);
+  //     });
+  // };
 
   // email verification message
-  const verifyEmail = (user) => {
-    sendEmailVerification(user).then(() => {
-      alert("Please check your email!");
-    });
-  };
+  // const verifyEmail = (user) => {
+  //   sendEmailVerification(user).then(() => {
+  //     alert("Please check your email!");
+  //   });
+  // };
 
   return (
     <div className="">
@@ -123,7 +127,7 @@ const Register = () => {
             </button>
           </div>
           {/* error message */}
-          {error && (
+          {/* {error && (
             <div className="alert alert-error shadow-lg">
               <div>
                 <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
@@ -137,7 +141,7 @@ const Register = () => {
                 <span>{error}</span>
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </form>
       <p className="text-center text-2xl mt-2">--------------or---------------</p>

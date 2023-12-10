@@ -1,7 +1,7 @@
-import { createContext, useEffect, useState } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useContext, useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
-  getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
@@ -9,18 +9,17 @@ import {
   signInWithPopup,
   GithubAuthProvider,
   FacebookAuthProvider,
+  updateProfile,
+  sendEmailVerification,
 } from "firebase/auth";
-import app from "../firebase/firebase.config";
+import { auth } from "../firebase/firebase.config";
 
-const auth = getAuth(app);
-export const UserContext = createContext(null);
+export const UserAuthContext = createContext(null);
 
 // eslint-disable-next-line react/prop-types
-const AuthProvider = ({ children }) => {
+export const UserAuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(true);
+
   // create or register user using email and password
   const createUserUsingEmailAndPassword = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -49,6 +48,18 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, facebookProvider);
   };
 
+  // update user profile
+  const updateUserProfile = (name, user) => {
+    return updateProfile(user, {
+      displayName: name,
+    });
+  };
+
+  // verify user email
+  const verifyUserEmail = (user) => {
+    return sendEmailVerification(user);
+  };
+
   // sign out or logout
   const logOut = () => {
     return signOut(auth);
@@ -58,31 +69,34 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
-      setLoading(false);
       console.log(user);
     });
     return () => {
-      return unsubscribe;
+      return unsubscribe();
     };
   }, []);
 
-  const userInfo = {
-    createUserUsingEmailAndPassword,
-    loginUsingEmailAndPassword,
-    logOut,
-    user,
-    setUser,
-    error,
-    setError,
-    success,
-    setSuccess,
-    loading,
-    setLoading,
-    signInUsingGoogle,
-    signInUsingGithub,
-    signInUsingFacebook,
-  };
-  return <UserContext.Provider value={userInfo}>{children}</UserContext.Provider>;
+  return (
+    <UserAuthContext.Provider
+      value={{
+        createUserUsingEmailAndPassword,
+        loginUsingEmailAndPassword,
+        logOut,
+        user,
+        setUser,
+        signInUsingGoogle,
+        signInUsingGithub,
+        signInUsingFacebook,
+        updateUserProfile,
+        verifyUserEmail,
+      }}
+    >
+      {children}
+    </UserAuthContext.Provider>
+  );
 };
 
-export default AuthProvider;
+// hooks for getting users authenticated
+export const useUserAuth = () => {
+  return useContext(UserAuthContext);
+};

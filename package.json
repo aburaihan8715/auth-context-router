@@ -1,5 +1,5 @@
 {
-  "name": "router-auth-context",
+  "name": "auth-context-router",
   "private": true,
   "version": "0.0.0",
   "type": "module",

@@ -1,57 +1,64 @@
-import { useContext, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { UserContext } from "../contexts/AuthProvider";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import SocialLogin from "../ui/SocialLogin";
 import useTitle from "../hooks/useTitle";
+import { useState } from "react";
+import { useUserAuth } from "../contexts/UserAuthContext";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { loginUsingEmailAndPassword, setUser, setLoading, error, setError } = useContext(UserContext);
+  const { loginUsingEmailAndPassword } = useUserAuth();
   useTitle("Login");
 
   const location = useLocation();
   const navigate = useNavigate();
   const from = location?.state?.from?.pathname || "/";
 
-  const loginHandler = (event) => {
+  const loginHandler = async (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
     form.reset();
 
     // login user using email and password
-    loginUsingEmailAndPassword(email, password)
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        setLoading(false);
-        alert("Login success!!");
-        setError("");
-        navigate(from);
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        setError(errorMessage);
-        console.log(errorMessage);
-      });
+    // loginUsingEmailAndPassword(email, password)
+    //   .then((result) => {
+    //     const user = result.user;
+
+    //     alert("Login success!!");
+    //     setError("");
+    //     navigate(from);
+    //   })
+    //   .catch((error) => {
+    //     const errorMessage = error.message;
+    //     setError(errorMessage);
+    //     console.log(errorMessage);
+    //   });
+
+    try {
+      await loginUsingEmailAndPassword(email, password);
+      alert("Login success!!");
+      navigate(from);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
-    <div className="">
-      <h1 className="text-4xl text-gray-700 uppercase text-center mb-4">Login</h1>
-      <div className="text-center mb-2">
-        <small>
-          New user?
-          <Link className="text-blue-600" to="/register">
+    <div className="border max-w-md mx-auto p-5 rounded">
+      <h1 className="text-3xl uppercase text-center mb-4">Login</h1>
+      <div className="flex gap-2 justify-center mb-2">
+        <span>New user?</span>
+        <strong>
+          <Link className="text-red-600" to="/register">
             Register
           </Link>
-          here.
-        </small>
+        </strong>
+        <span> here.</span>
       </div>
+
       <form onSubmit={loginHandler}>
-        <div className="space-y-3 md:w-1/2 mx-auto">
+        <div className="">
           <div className="">
             <input className="border rounded p-2 w-full" type="email" name="email" id="email" placeholder="Enter email" required />
           </div>
@@ -83,7 +90,7 @@ const Login = () => {
           </div>
 
           {/* error message */}
-          {error && (
+          {/* {error && (
             <div className="alert alert-error shadow-lg">
               <div>
                 <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
@@ -97,13 +104,13 @@ const Login = () => {
                 <span>{error}</span>
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </form>
       <p className="text-center text-2xl">---------------or---------------</p>
 
       {/* social login */}
-      <SocialLogin></SocialLogin>
+      <SocialLogin />
     </div>
   );
 };

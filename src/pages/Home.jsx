@@ -8,7 +8,7 @@ const Home = () => {
     <div className="">
       <h1 className="text-3xl text-center font-semibold uppercase">Welcome to world</h1>
       <div className="text-center flex justify-center">
-        <img src={gifImg} alt="globe" />
+        <img className="rounded-full" src={gifImg} alt="globe" />
       </div>
     </div>
   );
