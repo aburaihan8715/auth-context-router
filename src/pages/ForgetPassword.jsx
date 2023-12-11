@@ -1,73 +1,19 @@
 import { useNavigate } from "react-router-dom";
-import { sendPasswordResetEmail } from "firebase/auth";
 import useTitle from "../hooks/useTitle";
-import { auth } from "../firebase/firebase.config";
+import ForgetPasswordForm from "../components/authentication/ForgetPasswordForm";
 
 const ForgetPassword = () => {
   const navigate = useNavigate();
   useTitle("ForgetPassword");
 
-  // const emailRef = useRef();
-
-  const passwordResetSubmitHandler = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const email = form.email.value;
-    passwordResetEmail(email);
-    form.reset();
-  };
-
-  // password reset email
-  const passwordResetEmail = (email) => {
-    sendPasswordResetEmail(auth, email)
-      .then(() => {
-        alert("Please check your mail!!");
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        console.log(errorMessage);
-      });
-  };
-
   return (
-    <div className="">
-      <h1 className="text-4xl text-gray-700 uppercase text-center mb-4">Forget Password</h1>
-      <form onSubmit={passwordResetSubmitHandler}>
-        <div className="space-y-3 mx-auto">
-          <div className="w-full">
-            <input className="border rounded p-2 w-full" type="email" name="email" id="email" placeholder="Enter email" required />
-          </div>
-
-          <div className="text-right">
-            <button className="btn btn-primary w-full" type="submit">
-              Submit
-            </button>
-          </div>
-
-          {/* error message */}
-
-          {/* {error && (
-            <div className="alert alert-error shadow-lg">
-              <div>
-                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <span>{error}</span>
-              </div>
-            </div>
-          )} */}
-        </div>
-      </form>
-      {/* go back */}
-      <div className="">
-        <small onClick={() => navigate(-1)} className="text-blue-700 cursor-pointer">
+    <div className="border max-w-md mx-auto p-5 rounded">
+      <h1 className="text-3xl uppercase text-center mb-4">reset password</h1>
+      <ForgetPasswordForm />
+      <div className=" mt-2">
+        <strong onClick={() => navigate(-1)} className="text-red-600 cursor-pointer hover:underline hover:underline-offset-4">
           Go back
-        </small>
+        </strong>
       </div>
     </div>
   );

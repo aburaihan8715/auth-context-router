@@ -97,43 +97,32 @@ const SocialLogin = () => {
   return (
     <div className="">
       {/* google login */}
-      <div className="text-center mt-4 flex justify-center border">
-        <div className="w-48">
-          <button onClick={loginUsingGoogleHandler} className="btn btn-primary w-full flex justify-between px-10">
-            <span>
-              <img src="https://i.ibb.co/72bXZqD/google.png" width="24px" height="24px" alt="google" />{" "}
-            </span>
-            <span>google</span>
-          </button>
-          <ToastContainer />
+      <button onClick={loginUsingGoogleHandler} className="text-center mt-4 p-3 rounded flex justify-center border w-full">
+        <div className="flex gap-4 items-center">
+          <img src="https://i.ibb.co/72bXZqD/google.png" width="20px" height="20px" alt="google" />
+          <span className="uppercase">google</span>
         </div>
-      </div>
+        <ToastContainer />
+      </button>
 
       {/* github login */}
-      <div className="text-center mt-4  flex justify-center">
-        <div className="w-48">
-          <button onClick={loginUsingGithubHandler} className="btn btn-primary w-full flex justify-between px-10">
-            <span>
-              <img src="https://i.ibb.co/JHJ7PMt/github.png" width="24px" height="24px" alt="google" />{" "}
-            </span>
-            <span>google</span>
-          </button>
-          <ToastContainer />
+      <button onClick={loginUsingGithubHandler} className="text-center mt-4 p-3 rounded flex justify-center border w-full">
+        <div className="flex gap-4 items-center">
+          <img src="https://i.ibb.co/JHJ7PMt/github.png" width="20px" height="20px" alt="github" />
+          <span className="uppercase">github</span>
         </div>
-      </div>
+        <ToastContainer />
+      </button>
 
       {/* facebook login */}
-      <div className="text-center mt-4 mb-2  flex justify-center">
-        <div className="w-48">
-          <button onClick={loginUsingFacebookHandler} className="btn btn-primary w-full flex justify-between px-10">
-            <span>
-              <img src="https://i.ibb.co/Y7nTmxp/facebook.png" width="24px" height="24px" alt="google" />{" "}
-            </span>
-            <span>google</span>
-          </button>
-          <ToastContainer />
+      <button onClick={loginUsingFacebookHandler} className="text-center mt-4 p-3 rounded flex justify-center border w-full">
+        <div className="flex gap-4 items-center">
+          <img src="https://i.ibb.co/Y7nTmxp/facebook.png" width="20px" height="20px" alt="facebook" />
+
+          <span className="uppercase">facebook</span>
         </div>
-      </div>
+        <ToastContainer />
+      </button>
     </div>
   );
 };

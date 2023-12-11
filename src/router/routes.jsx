@@ -10,6 +10,7 @@ import Authenticated from "../pages/Authenticated";
 import Admin from "../pages/Admin";
 import Teacher from "../pages/Teacher";
 import SimpleUser from "../pages/SimpleUser";
+import VerifyEmail from "../pages/VerifyEmail";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,11 @@ const router = createBrowserRouter([
       {
         path: "/forgetPassword",
         element: <ForgetPassword></ForgetPassword>,
+      },
+
+      {
+        path: "/verifyEmail",
+        element: <VerifyEmail></VerifyEmail>,
       },
       {
         path: "/admin",

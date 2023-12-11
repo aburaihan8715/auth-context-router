@@ -11,6 +11,7 @@ import {
   FacebookAuthProvider,
   updateProfile,
   sendEmailVerification,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
 
@@ -49,15 +50,21 @@ export const UserAuthContextProvider = ({ children }) => {
   };
 
   // update user profile
-  const updateUserProfile = (name, user) => {
+  const updateUserProfile = (name = "unknown", photo = "https://i.ibb.co/nCCcPC7/demo-user.jpg") => {
     return updateProfile(user, {
       displayName: name,
+      photoURL: photo,
     });
   };
 
   // verify user email
-  const verifyUserEmail = (user) => {
+  const verifyUserEmail = () => {
     return sendEmailVerification(user);
+  };
+
+  // password reset email
+  const passwordResetEmail = (email) => {
+    return sendPasswordResetEmail(auth, email);
   };
 
   // sign out or logout
@@ -69,12 +76,13 @@ export const UserAuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      // TODO: after checking user email is verified then store user in the database
       console.log(user);
     });
     return () => {
       return unsubscribe();
     };
-  }, []);
+  }, [user]);
 
   return (
     <UserAuthContext.Provider
@@ -89,6 +97,7 @@ export const UserAuthContextProvider = ({ children }) => {
         signInUsingFacebook,
         updateUserProfile,
         verifyUserEmail,
+        passwordResetEmail,
       }}
     >
       {children}

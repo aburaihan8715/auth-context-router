@@ -1,0 +1,22 @@
+
+## Auth context router
+
+### =========references===========
+-tutorials
+
+
+
+### features/actions
+
+
+### technologies used
+
+
+### completed tasks
+
+
+### pending tasks
+
+
+
+### others
